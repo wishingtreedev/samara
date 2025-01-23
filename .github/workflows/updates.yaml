@@ -60,12 +60,12 @@ jobs:
             --title "Dependency Updates" \
             --body "Dependency updates from scala-cli" \
             --head dependency-update \
-            --base main && gh workflow run pr-tests.yml || echo "Pull request already exists or no changes to push"
+            --base main || echo "Pull request already exists or no changes to push"
 
       - name: Trigger PR Tests
         run: |
           if [ "$changes_exists" = "true" ]; then
-            gh workflow run pr-tests.yml  || echo "Error running PR tests"
+            gh workflow run pr-tests.yaml  || echo "Error running PR tests"
           else
             echo "No changes; not running PR tests"
           fi
